@@ -20,47 +20,43 @@ import org.springframework.web.bind.annotation.RestController;
 import com.generation.lojagames.model.CategoriaModel;
 import com.generation.lojagames.repository.CategoriaRepository;
 
-
 @RestController
 @RequestMapping("/categorias")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
-
+@CrossOrigin("*")
 public class CategoriaController {
+	
 	@Autowired
-	private CategoriaRepository categoriaRepository;
-
+	private CategoriaRepository repository;
+	
 	@GetMapping
-	public ResponseEntity<List<CategoriaModel>> getAll() {
-		return ResponseEntity.ok(categoriaRepository.findAll());
+	public ResponseEntity<List<CategoriaModel>> getAll(){
+		return ResponseEntity.ok(repository.findAll());
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<CategoriaModel> getById(@PathVariable Long id){
-		return categoriaRepository.findById(id).map(resp -> ResponseEntity.ok(resp))
+		return repository.findById(id).map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@GetMapping("/acao/{acao}")
-	public ResponseEntity<List<CategoriaModel>> getByDescricao(@PathVariable String acao){
-		return ResponseEntity.ok(categoriaRepository.findAllByAcaoContainingIgnoreCase(acao));
+	@GetMapping("/nome/{nome}")
+	public ResponseEntity<List<CategoriaModel>> getByName(@PathVariable String nome){
+		return ResponseEntity.ok(repository.findAllByAcaoContainingIgnoreCase(nome));
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<CategoriaModel> postCategoria(@Valid @RequestBody CategoriaModel categoria) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(categoriaRepository.save(categoria));
-	}
+	public ResponseEntity<CategoriaModel> postTema(@Valid @RequestBody CategoriaModel nomeCategoria) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(nomeCategoria));
+	} 
 	
 	@PutMapping
-	public ResponseEntity<CategoriaModel> put (@RequestBody CategoriaModel categoria){
-		return ResponseEntity.ok(categoriaRepository.save(categoria));
+	public ResponseEntity<CategoriaModel> put (@RequestBody CategoriaModel nomeCategoria){
+		return ResponseEntity.ok(repository.save(nomeCategoria));
 	}
 	
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
-		categoriaRepository.deleteById(id);
+		repository.deleteById(id);
 	}
-	
+
 }
-	
-	
-	

@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "produto")
+@Table(name = "tb_produto")
 public class ProdutoModel {
 	
 	@Id
@@ -69,5 +69,23 @@ public class ProdutoModel {
 
 	public void setAnolancamento(int anolancamento) {
 		this.anolancamento = anolancamento;
+	}
+
+	public CategoriaModel getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(CategoriaModel categoria) {
+		this.categoria = categoria;
+	}
+
+	public UsuarioModel getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioModel usuario) {
+		this.usuario = usuario;
 	}	
+	
 }
+
